@@ -191,7 +191,7 @@ May this year be filled with new adventures, cherished moments, and all the happ
 
       <div className="relative">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(30)].map((_, i) => (
+          {[...Array(50)].map((_, i) => (
             <div
               key={i}
               className="absolute animate-float"
@@ -252,7 +252,7 @@ May this year be filled with new adventures, cherished moments, and all the happ
               Happy Birthday!
             </h1>
             <p className="text-2xl md:text-3xl text-blue-100 font-light tracking-wide">
-              Celebrating You Today
+              🥳🥳Celebrating You Today🥳🥳
             </p>
             <div className="flex items-center justify-center gap-2 mt-6">
               <Heart className="w-6 h-6 text-blue-400 animate-pulse drop-shadow-[0_0_10px_rgba(59,130,246,0.8)]" />
