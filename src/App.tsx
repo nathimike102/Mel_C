@@ -1,13 +1,70 @@
-import { useState, useEffect, useRef } from 'react';
-import { Heart, Music, Volume2, VolumeX, Sparkles, Cake } from 'lucide-react';
+import { useState, useEffect, useRef, useMemo } from 'react';
+import { Heart, Volume2, VolumeX, Sparkles, Cake } from 'lucide-react';
+
+import imgA from './image4/WhatsApp Image 2025-10-25 at 23.12.50.jpeg';
+import imgB from './image4/jwwrd_WhatsApp Image 2025-10-25 at 23.12.48.jpeg';
+import imgC from './image4/kdzhi_WhatsApp Image 2025-10-25 at 23.12.47.jpeg';
+import imgD from './image4/opbnu_WhatsApp Image 2025-10-25 at 23.12.48.jpeg';
+
+// background song (local)
+import bgSong from './song/Samthing_Soweto_-_Happy_Birthday_CeeNaija.com_.mp3';
+// explicit floating images (reverted from dynamic loader)
+import imgWhatsApp_231248 from './images/WhatsApp Image 2025-10-25 at 23.12.48.jpeg';
+import imgWhatsApp_231249 from './images/WhatsApp Image 2025-10-25 at 23.12.49.jpeg';
+import imgWhatsApp_231251 from './images/WhatsApp Image 2025-10-25 at 23.12.51.jpeg';
+import imgWhatsApp_231253 from './images/WhatsApp Image 2025-10-25 at 23.12.53.jpeg';
+import img_bazjq_231249 from './images/bazjq_WhatsApp Image 2025-10-25 at 23.12.49.jpeg';
+import img_cfrjv_231249 from './images/cfrjv_WhatsApp Image 2025-10-25 at 23.12.49.jpeg';
+import img_ezwpj_231250 from './images/ezwpj_WhatsApp Image 2025-10-25 at 23.12.50.jpeg';
+import img_gytbu_231251 from './images/gytbu_WhatsApp Image 2025-10-25 at 23.12.51.jpeg';
+import img_jkuwg_231248 from './images/jkuwg_WhatsApp Image 2025-10-25 at 23.12.48.jpeg';
+import img_muiij_231248 from './images/muiij_WhatsApp Image 2025-10-25 at 23.12.48.jpeg';
+import img_rbmoz_231251 from './images/rbmoz_WhatsApp Image 2025-10-25 at 23.12.51.jpeg';
+import img_sfrav_231251 from './images/sfrav_WhatsApp Image 2025-10-25 at 23.12.51.jpeg';
+import img_zmfyo_231250 from './images/zmfyo_WhatsApp Image 2025-10-25 at 23.12.50.jpeg';
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showContent, setShowContent] = useState(false);
+  const [runtimeError, setRuntimeError] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     setTimeout(() => setShowContent(true), 500);
+
+    // Try to autoplay the background music on load. Browsers may block autoplay
+    // without user interaction; if blocked the toggle button will allow playback.
+    const tryAutoplay = async () => {
+      if (audioRef.current) {
+        audioRef.current.volume = 1.0;
+        try {
+          await audioRef.current.play();
+          setIsPlaying(true);
+        } catch (err) {
+          // autoplay blocked — user can press the toggle button to start music
+        }
+      }
+    };
+
+    tryAutoplay();
+  }, []);
+
+  // global error handlers to surface unexpected runtime errors
+  useEffect(() => {
+    const onError = (e: ErrorEvent) => {
+      console.error('Global error captured:', e.error || e.message || e);
+      setRuntimeError(String(e.error || e.message || e));
+    };
+    const onRejection = (e: PromiseRejectionEvent) => {
+      console.error('Unhandled rejection:', e.reason);
+      setRuntimeError(String(e.reason || 'Unhandled promise rejection'));
+    };
+    window.addEventListener('error', onError);
+    window.addEventListener('unhandledrejection', onRejection as any);
+    return () => {
+      window.removeEventListener('error', onError);
+      window.removeEventListener('unhandledrejection', onRejection as any);
+    };
   }, []);
 
   const toggleMusic = () => {
@@ -22,51 +79,103 @@ function App() {
   };
 
   const photos = [
-    { id: 1, url: 'https://images.pexels.com/photos/1024960/pexels-photo-1024960.jpeg', caption: 'Always smiling' },
-    { id: 2, url: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg', caption: 'Living your best life' },
-    { id: 3, url: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg', caption: 'Making memories' },
-    { id: 4, url: 'https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg', caption: 'You light up every room' },
+    { id: 1, url: imgA, caption: 'That radiant smile that lights every room' },
+    { id: 2, url: imgB, caption: 'Warm moments full of love' },
+    { id: 3, url: imgC, caption: 'Always ready for a little adventure' },
+    { id: 4, url: imgD, caption: 'Candle-blowing, wish-making memories' },
   ];
 
+  // Explicit floating photos (reverted from dynamic loader)
   const floatingPhotos = [
-    { id: 1, url: 'https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg' },
-    { id: 2, url: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg' },
-    { id: 3, url: 'https://images.pexels.com/photos/1391498/pexels-photo-1391498.jpeg' },
-    { id: 4, url: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg' },
+    { id: 1, url: imgWhatsApp_231248 },
+    { id: 2, url: img_jkuwg_231248 },
+    { id: 3, url: img_muiij_231248 },
+    { id: 4, url: imgWhatsApp_231249 },
+    { id: 5, url: img_bazjq_231249 },
+    { id: 6, url: img_cfrjv_231249 },
+    { id: 7, url: img_ezwpj_231250 },
+    { id: 8, url: img_zmfyo_231250 },
+    { id: 9, url: imgWhatsApp_231251 },
+    { id: 10, url: img_gytbu_231251 },
+    { id: 11, url: img_rbmoz_231251 },
+    { id: 12, url: img_sfrav_231251 },
+    { id: 13, url: imgWhatsApp_231253 },
   ];
+
+  // compute one-time random positions for floating photos so they are spread
+  // across the viewport and remain stable during the session
+  const floatingPositions = useMemo(() => {
+    const margin = 8; // percent margin to avoid clipping at edges
+    return floatingPhotos.map(() => {
+      const left = Math.random() * (100 - margin * 2) + margin; // between margin and 100-margin
+      const top = Math.random() * (100 - margin * 2) + margin;
+      const delay = Math.random() * 3;
+      const duration = 12 + Math.random() * 10;
+      return { left: `${left.toFixed(2)}%`, top: `${top.toFixed(2)}%`, delay: `${delay.toFixed(2)}s`, duration: `${duration.toFixed(2)}s` };
+    });
+  }, [floatingPhotos.length]);
 
   const messages = [
     {
       id: 1,
-      text: "You're not just a year older, you're a year more fabulous! Keep shining bright like the star you are.",
-      author: 'Your biggest fan',
+      text: `Happy Birthday to mamncae’ wami 🥳🥳🥳
+
+On this special day, I want you to know how much you mean to me. Your laughter, wisdom, and endless love bring so much joy 🥰. You have a unique way of making everyone feel special, and I’m so grateful to have you in my life 😌.
+
+May this year be filled with new adventures, cherished moments, and all the happiness you give to others. You deserve every bit of joy that comes your way. Celebrate big today — you’re one in a million!, million ngani incane, one in Zillion khonangale 🫢☺️🥰🥳🥳🥳.`,
+      author: 'With all my love',
     },
     {
       id: 2,
-      text: "Age is merely the number of years the world has been enjoying you. And what a joy it's been!",
-      author: 'With love',
+      text: `Thank you for all the laughter, guidance, and unconditional love you've given me over the years. You bring so much joy and light to our family, and I hope your day is as wonderful and special as you are. Wishing you the very best on your birthday — I'm sending you all my love.`,
+      author: 'Forever grateful',
     },
     {
       id: 3,
-      text: "Here's to another year of laughing until it hurts, dealing with stupid people, and keeping each other sane. Cheers!",
-      author: 'Your partner in crime',
+      text: `I hope your birthday is filled with everything that makes you smile. Your kind heart and bright spirit are such a gift to us. Love you dearly!`,
+      author: 'Love always',
     },
     {
       id: 4,
-      text: "You're not getting older, you're just becoming a classic! Like fine wine, you only get better with time.",
-      author: 'Forever grateful',
+      text: `You've always been one of my favorite people to talk to. Thank you for the great advice and the even better laughs. You're not getting older — you're leveling up! Happy Birthday — you deserve the best!`,
+      author: 'Cheering you on',
     },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950 overflow-x-hidden relative">
+      {/* Runtime error overlay: shows when an error is caught so we can debug the white screen */}
+      {runtimeError && (
+        <div className="fixed inset-0 z-[9999] bg-black/90 text-white p-6 overflow-auto">
+          <h2 className="text-3xl font-bold mb-4">Runtime error detected</h2>
+          <pre className="whitespace-pre-wrap mb-4">{runtimeError}</pre>
+          <div className="mb-4">
+            <strong>Floating photos loaded:</strong>
+            <div className="mt-2">
+              {floatingPhotos.length === 0 ? (
+                <div>No floating photos loaded.</div>
+              ) : (
+                <ul className="list-disc list-inside">
+                  {floatingPhotos.slice(0, 20).map((f) => (
+                    <li key={f.id} className="break-words">{f.url}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+          <div className="mt-6">
+            <button
+              onClick={() => setRuntimeError(null)}
+              className="px-4 py-2 bg-red-600 rounded-md shadow hover:opacity-90"
+            >
+              Dismiss overlay
+            </button>
+          </div>
+        </div>
+      )}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-600/20 via-transparent to-transparent"></div>
 
-      <audio
-        ref={audioRef}
-        src="https://www.bensound.com/bensound-music/bensound-birthdayparty.mp3"
-        loop
-      />
+      <audio ref={audioRef} src={bgSong} loop preload="auto" />
 
       <button
         onClick={toggleMusic}
@@ -109,10 +218,10 @@ function App() {
               key={photo.id}
               className="absolute animate-orbit"
               style={{
-                left: `${15 + index * 20}%`,
-                top: `${20 + index * 15}%`,
-                animationDelay: `${index * 2}s`,
-                animationDuration: `${15 + index * 3}s`,
+                left: floatingPositions[index]?.left,
+                top: floatingPositions[index]?.top,
+                animationDelay: floatingPositions[index]?.delay,
+                animationDuration: floatingPositions[index]?.duration,
               }}
             >
               <div className="relative group">
@@ -158,7 +267,7 @@ function App() {
             }`}
           >
             <h2 className="text-4xl font-bold text-center mb-10 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              Memories Together
+              MEL C
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {photos.map((photo, index) => (
