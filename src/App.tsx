@@ -1,27 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { Heart, Volume2, VolumeX, Sparkles, Cake } from 'lucide-react';
 
-import imgA from './image4/WhatsApp Image 2025-10-25 at 23.12.50.jpeg';
-import imgB from './image4/jwwrd_WhatsApp Image 2025-10-25 at 23.12.48.jpeg';
-import imgC from './image4/kdzhi_WhatsApp Image 2025-10-25 at 23.12.47.jpeg';
-import imgD from './image4/opbnu_WhatsApp Image 2025-10-25 at 23.12.48.jpeg';
-
-// background song (local)
-import bgSong from './song/Samthing_Soweto_-_Happy_Birthday_CeeNaija.com_.mp3';
-// explicit floating images (reverted from dynamic loader)
-import imgWhatsApp_231248 from './images/WhatsApp Image 2025-10-25 at 23.12.48.jpeg';
-import imgWhatsApp_231249 from './images/WhatsApp Image 2025-10-25 at 23.12.49.jpeg';
-import imgWhatsApp_231251 from './images/WhatsApp Image 2025-10-25 at 23.12.51.jpeg';
-import imgWhatsApp_231253 from './images/WhatsApp Image 2025-10-25 at 23.12.53.jpeg';
-import img_bazjq_231249 from './images/bazjq_WhatsApp Image 2025-10-25 at 23.12.49.jpeg';
-import img_cfrjv_231249 from './images/cfrjv_WhatsApp Image 2025-10-25 at 23.12.49.jpeg';
-import img_ezwpj_231250 from './images/ezwpj_WhatsApp Image 2025-10-25 at 23.12.50.jpeg';
-import img_gytbu_231251 from './images/gytbu_WhatsApp Image 2025-10-25 at 23.12.51.jpeg';
-import img_jkuwg_231248 from './images/jkuwg_WhatsApp Image 2025-10-25 at 23.12.48.jpeg';
-import img_muiij_231248 from './images/muiij_WhatsApp Image 2025-10-25 at 23.12.48.jpeg';
-import img_rbmoz_231251 from './images/rbmoz_WhatsApp Image 2025-10-25 at 23.12.51.jpeg';
-import img_sfrav_231251 from './images/sfrav_WhatsApp Image 2025-10-25 at 23.12.51.jpeg';
-import img_zmfyo_231250 from './images/zmfyo_WhatsApp Image 2025-10-25 at 23.12.50.jpeg';
+const audioSrc = '/song/Samthing_Soweto_-_Happy_Birthday_CeeNaija.com_.mp3';
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -31,9 +11,6 @@ function App() {
 
   useEffect(() => {
     setTimeout(() => setShowContent(true), 500);
-
-    // Try to autoplay the background music on load. Browsers may block autoplay
-    // without user interaction; if blocked the toggle button will allow playback.
     const tryAutoplay = async () => {
       if (audioRef.current) {
         audioRef.current.volume = 1.0;
@@ -49,7 +26,6 @@ function App() {
     tryAutoplay();
   }, []);
 
-  // global error handlers to surface unexpected runtime errors
   useEffect(() => {
     const onError = (e: ErrorEvent) => {
       console.error('Global error captured:', e.error || e.message || e);
@@ -79,35 +55,32 @@ function App() {
   };
 
   const photos = [
-    { id: 1, url: imgA, caption: 'That radiant smile that lights every room' },
-    { id: 2, url: imgB, caption: 'Warm moments full of love' },
-    { id: 3, url: imgC, caption: 'Always ready for a little adventure' },
-    { id: 4, url: imgD, caption: 'Candle-blowing, wish-making memories' },
+    { id: 1, url: '/image4/WhatsApp Image 2025-10-25 at 23.12.50.jpeg', caption: 'That radiant smile that lights every room' },
+    { id: 2, url: '/image4/jwwrd_WhatsApp Image 2025-10-25 at 23.12.48.jpeg', caption: 'Warm moments full of love' },
+    { id: 3, url: '/image4/kdzhi_WhatsApp Image 2025-10-25 at 23.12.47.jpeg', caption: 'Always ready for a little adventure' },
+    { id: 4, url: '/image4/opbnu_WhatsApp Image 2025-10-25 at 23.12.48.jpeg', caption: 'Candle-blowing, wish-making memories' },
   ];
 
-  // Explicit floating photos (reverted from dynamic loader)
   const floatingPhotos = [
-    { id: 1, url: imgWhatsApp_231248 },
-    { id: 2, url: img_jkuwg_231248 },
-    { id: 3, url: img_muiij_231248 },
-    { id: 4, url: imgWhatsApp_231249 },
-    { id: 5, url: img_bazjq_231249 },
-    { id: 6, url: img_cfrjv_231249 },
-    { id: 7, url: img_ezwpj_231250 },
-    { id: 8, url: img_zmfyo_231250 },
-    { id: 9, url: imgWhatsApp_231251 },
-    { id: 10, url: img_gytbu_231251 },
-    { id: 11, url: img_rbmoz_231251 },
-    { id: 12, url: img_sfrav_231251 },
-    { id: 13, url: imgWhatsApp_231253 },
+    { id: 1, url: '/images/WhatsApp Image 2025-10-25 at 23.12.48.jpeg' },
+    { id: 2, url: '/images/jkuwg_WhatsApp Image 2025-10-25 at 23.12.48.jpeg' },
+    { id: 3, url: '/images/muiij_WhatsApp Image 2025-10-25 at 23.12.48.jpeg' },
+    { id: 4, url: '/images/WhatsApp Image 2025-10-25 at 23.12.49.jpeg' },
+    { id: 5, url: '/images/bazjq_WhatsApp Image 2025-10-25 at 23.12.49.jpeg' },
+    { id: 6, url: '/images/cfrjv_WhatsApp Image 2025-10-25 at 23.12.49.jpeg' },
+    { id: 7, url: '/images/ezwpj_WhatsApp Image 2025-10-25 at 23.12.50.jpeg' },
+    { id: 8, url: '/images/zmfyo_WhatsApp Image 2025-10-25 at 23.12.50.jpeg' },
+    { id: 9, url: '/images/WhatsApp Image 2025-10-25 at 23.12.51.jpeg' },
+    { id: 10, url: '/images/gytbu_WhatsApp Image 2025-10-25 at 23.12.51.jpeg' },
+    { id: 11, url: '/images/rbmoz_WhatsApp Image 2025-10-25 at 23.12.51.jpeg' },
+    { id: 12, url: '/images/sfrav_WhatsApp Image 2025-10-25 at 23.12.51.jpeg' },
+    { id: 13, url: '/images/WhatsApp Image 2025-10-25 at 23.12.53.jpeg' },
   ];
 
-  // compute one-time random positions for floating photos so they are spread
-  // across the viewport and remain stable during the session
   const floatingPositions = useMemo(() => {
-    const margin = 8; // percent margin to avoid clipping at edges
+    const margin = 8;
     return floatingPhotos.map(() => {
-      const left = Math.random() * (100 - margin * 2) + margin; // between margin and 100-margin
+      const left = Math.random() * (100 - margin * 2) + margin;
       const top = Math.random() * (100 - margin * 2) + margin;
       const delay = Math.random() * 3;
       const duration = 12 + Math.random() * 10;
@@ -144,7 +117,6 @@ May this year be filled with new adventures, cherished moments, and all the happ
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950 overflow-x-hidden relative">
-      {/* Runtime error overlay: shows when an error is caught so we can debug the white screen */}
       {runtimeError && (
         <div className="fixed inset-0 z-[9999] bg-black/90 text-white p-6 overflow-auto">
           <h2 className="text-3xl font-bold mb-4">Runtime error detected</h2>
@@ -175,7 +147,7 @@ May this year be filled with new adventures, cherished moments, and all the happ
       )}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-600/20 via-transparent to-transparent"></div>
 
-      <audio ref={audioRef} src={bgSong} loop preload="auto" />
+  <audio ref={audioRef} src={audioSrc} loop preload="auto" />
 
       <button
         onClick={toggleMusic}
