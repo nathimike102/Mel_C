@@ -325,6 +325,14 @@ May this year be filled with new adventures, cherished moments, and all the happ
           </div>
         </div>
       </div>
+
+      <footer className="mt-12 py-6 bg-gradient-to-r from-blue-900 to-slate-900 text-center text-sm text-blue-100">
+        <div className="max-w-4xl mx-auto px-4">
+          <p>Happy Birthday<span className="text-pink-400">❤</span>!</p>
+          <p className="mt-2">© {new Date().getFullYear()} Nathi. All rights reserved.</p>
+        </div>
+      </footer>
+
     </div>
   );
 }
